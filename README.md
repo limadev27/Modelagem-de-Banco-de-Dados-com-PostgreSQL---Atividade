@@ -9,26 +9,56 @@ O principal objetivo do sistema é otimizar o processo de atendimento, reduzir f
 
 ```
 erDiagram
-    CUSTOMER ||--o{ ORDER : places
-    ORDER ||--|{ ORDER_ITEM : contains
-    PRODUCT ||--o{ ORDER_ITEM : includes
-    CUSTOMER {
-        string id
-        string name
+    PESSOA {
+        int id PK
+        string nome
+        string cpf
+        string telefone
         string email
     }
-    ORDER {
-        string id
-        date orderDate
+
+    CLIENTE {
+        int id PK
+        int pessoa_id FK
+    }
+
+    ATENDENTE {
+        int id PK
+        int pessoa_id FK
+        string setor
         string status
     }
-    PRODUCT {
-        string id
-        string name
-        float price
+
+    FILA {
+        int id PK
+        string nome
+        string status
+        date data
+        int prioridade_id FK
     }
-    ORDER_ITEM {
-        int quantity
-        float price
+
+    PRIORIDADE {
+        int id PK
+        string descricao
     }
+
+    ATENDIMENTO {
+        int id PK
+        datetime inicio
+        datetime fim
+        string status
+        string observacoes
+        int atendente_id FK
+        int cliente_id FK
+        int fila_id FK
+    }
+
+    PESSOA ||--|| CLIENTE : "pode ser"
+    PESSOA ||--|| ATENDENTE : "pode ser"
+    
+    CLIENTE ||--o{ ATENDIMENTO : "recebe"
+    ATENDENTE ||--o{ ATENDIMENTO : "realiza"
+    
+    FILA ||--o{ ATENDIMENTO : "organiza"
+    PRIORIDADE ||--o{ FILA : "define"
 ```
