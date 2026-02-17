@@ -7,7 +7,7 @@ O  Sistema de Registro de Atendimento  é um aplicativo desenvolvido para auxili
 O principal objetivo do sistema é otimizar o processo de atendimento, reduzir falhas no controle manual e fornecer maior organização e eficiência operacional. Além disso, a ferramenta possibilita melhor acompanhamento administrativo, permitindo análise de desempenho e melhoria contínua dos serviços prestados.
 
 
-```
+```mermaid
 erDiagram
     PESSOA {
         int id PK
