@@ -6,6 +6,19 @@ O  Sistema de Registro de Atendimento  é um aplicativo desenvolvido para auxili
 
 O principal objetivo do sistema é otimizar o processo de atendimento, reduzir falhas no controle manual e fornecer maior organização e eficiência operacional. Além disso, a ferramenta possibilita melhor acompanhamento administrativo, permitindo análise de desempenho e melhoria contínua dos serviços prestados.
 
+## Estrutura Inicial do Projeto
+Nesta etapa, o projeto contempla apenas a modelagem inicial do banco de dados, com:
+
+- Definição das principais tabelas
+- Estabelecimento dos relacionamentos entre entidades
+- Sem aprofundamento em regras de negócio ou funcionalidades do sistema
+
+## Modelo de Dados
+O modelo de dados foi desenvolvido utilizando diagrama ER em formato MERMAID, representando:
+
+- Entidades principais do sistema: PESSOA, CLIENTE, ATENDENTE, FILA, PRIORIDADE e ATENDIMENTO
+- Relacionamentos entre as entidades
+- Estrutura inicial pronta para expansão futura
 
 ```mermaid
 erDiagram
