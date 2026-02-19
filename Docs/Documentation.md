@@ -1,0 +1,40 @@
+**DOCUMENTAÇÃO DB PARA FILA DE ATENDIMENTOS - V1.02**
+
+**TABELA PESSOA**
+
+* **ID**
+* **NOME**
+* **CPF**
+* **EMAIL**
+* **TELEFONE**
+
+**TABELA ATENDENTE**
+
+* **ID**
+* **PESSOA_ID**
+* **SETOR**
+* **TELEFONE**
+* **STATUS**
+
+**TABELA ATENDIMENTO**
+
+* **INICIO**
+* **FIM**
+* **STATUS**
+* **OBSERVAÇÕES**
+*ATENDENTE_ID
+* **CLIENTE_ID**
+* **FILA_ID**
+
+**TABELA FILA**
+
+* **ID**
+* **NOME**
+* **STATUS**
+* **DATA**
+* **PRIORIDADE-ID**
+
+**TABELA PRIORIDADE**
+
+* **ID**
+* **DESCRIÇÃO**
