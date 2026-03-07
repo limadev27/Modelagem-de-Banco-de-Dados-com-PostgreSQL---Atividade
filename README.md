@@ -51,6 +51,10 @@ erDiagram
         date data_nascimento
     }
 
+    SEXO{
+        in sexo_id PK    
+    }
+
     CLIENTE {
         int id_cliente PK
         int pessoa_id FK
@@ -96,6 +100,8 @@ erDiagram
     PESSOA ||--|| CLIENTE : "pode ser"
     PESSOA ||--|| ATENDENTE : "pode ser"
     
+    PESSOA ||--o{ SEXO : "define"
+
     CLIENTE ||--o{ SENHA_FICHA : "recebe"
     ATENDENTE ||--o{ SENHA_FICHA : "retira"
     ATENDENTE ||--o{ ATENDIMENTO : "realiza"
