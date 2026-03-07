@@ -6,7 +6,7 @@ O  Sistema de Registro de Atendimento  é um aplicativo desenvolvido para auxili
 
 O principal objetivo do sistema é otimizar o processo de atendimento, reduzir falhas no controle manual e fornecer maior organização e eficiência operacional. Além disso, a ferramenta possibilita melhor acompanhamento administrativo, permitindo análise de desempenho e melhoria contínua dos serviços prestados.
 
-## Estrutura Inicial do Projeto
+## Estrutura do Projeto
 Nesta etapa, o projeto contempla apenas a modelagem inicial do banco de dados, com:
 
 - Definição das principais tabelas
@@ -94,3 +94,10 @@ erDiagram
     FILA ||--o{ ATENDIMENTO : "organiza"
     PRIORIDADE ||--o{ FILA : "define"
 ```
+
+## Versão
+| Versão | Description |
+| --- | --- |
+| 1.1 | Estrutura que comtempla Entidades sistema: PESSOA, CLIENTE, ATENDENTE, FILA, PRIORIDADE e ATENDIMENTO  |
+| 1.2| Adição do fluxograma exemplificando como irá funcionar o sistema |
+| 1.3| Adição de esquema de versionamento do projeto|
