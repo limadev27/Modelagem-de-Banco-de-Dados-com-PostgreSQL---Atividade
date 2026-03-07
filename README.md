@@ -98,6 +98,7 @@ erDiagram
     
     CLIENTE ||--o{ SENHA_FICHA : "recebe"
     ATENDENTE ||--o{ SENHA_FICHA : "retira"
+    ATENDENTE ||--o{ ATENDIMENTO : "realiza"
     
     SENHA_FICHA ||--o{ FILA : "direciona"
     SENHA_FICHA ||--o{ PRIORIDADE : "define"
