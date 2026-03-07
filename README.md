@@ -20,6 +20,25 @@ O modelo de dados foi desenvolvido utilizando diagrama ER em formato MERMAID, re
 - Relacionamentos entre as entidades
 - Estrutura inicial pronta para expansão futura
 
+## Fluxograma do Sistema
+```
+Cliente chega à agencia bancaria e se dirige ao recepcionista
+        ↓
+Recepcionista realiza retirada de ficha/senha para o cliente
+        ↓
+Recepcionista analisa se o cliente tem auguma condição prioritária:
+    Se Não                                Se Sim:
+        ↓                                      ↓
+Cliente é inserido em fila Comum     Cliente é inserido em fila prioritária
+        ↓                                      ↓
+Cliente é atendido por algum especialista   ← ←
+(Assistente comercial, Gerente juridico etc..)
+        ↓
+Atendimento registrado e concluído
+        ↓
+Atendimento é encerrado
+```
+
 ```mermaid
 erDiagram
     PESSOA {
