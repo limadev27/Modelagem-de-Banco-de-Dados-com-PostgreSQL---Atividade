@@ -42,23 +42,31 @@ Atendimento é encerrado
 ```mermaid
 erDiagram
     PESSOA {
-        int id PK
-        string nome
-        string cpf
-        string telefone
-        string email
+        int id_pessoa PK
+        int sexo_id FK
+        varchar nome
+        varchar cpf
+        varchar telefone
+        varchar email
+        date data_nascimento
     }
 
     CLIENTE {
-        int id PK
+        int id_cliente PK
         int pessoa_id FK
     }
 
     ATENDENTE {
-        int id PK
+        int id_atendente PK
         int pessoa_id FK
-        string setor
-        string status
+        int cargo
+        
+    }
+
+    SENHA_FICHA{
+        numeric senha_id PK
+        int id_pessoa FK
+
     }
 
     FILA {
@@ -88,16 +96,20 @@ erDiagram
     PESSOA ||--|| CLIENTE : "pode ser"
     PESSOA ||--|| ATENDENTE : "pode ser"
     
-    CLIENTE ||--o{ ATENDIMENTO : "recebe"
-    ATENDENTE ||--o{ ATENDIMENTO : "realiza"
+    CLIENTE ||--o{ SENHA_FICHA : "recebe"
+    ATENDENTE ||--o{ SENHA_FICHA : "retira"
     
+    SENHA_FICHA ||--o{ FILA : "direciona"
+    SENHA_FICHA ||--o{ PRIORIDADE : "define"
+
     FILA ||--o{ ATENDIMENTO : "organiza"
-    PRIORIDADE ||--o{ FILA : "define"
+    PRIORIDADE ||--o{ ATENDIMENTO : "define"
 ```
 
 ## Versão
 | Versão | Description |
 | --- | --- |
-| 1.1 | Estrutura que comtempla Entidades sistema: PESSOA, CLIENTE, ATENDENTE, FILA, PRIORIDADE e ATENDIMENTO  |
+| 1.1| Estrutura que comtempla Entidades sistema: PESSOA, CLIENTE, ATENDENTE, FILA, PRIORIDADE e ATENDIMENTO  |
 | 1.2| Adição do fluxograma exemplificando como irá funcionar o sistema |
 | 1.3| Adição de esquema de versionamento do projeto|
+| 1.4| Alteração do diagrama MERMAID com alguns incrementos|
