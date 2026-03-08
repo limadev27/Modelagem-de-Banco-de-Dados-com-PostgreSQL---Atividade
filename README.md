@@ -7,18 +7,28 @@ O  Sistema de Registro de Atendimento  é um sitema dedicado a entidades bancár
 O principal objetivo do sistema é otimizar o processo de atendimento, reduzir falhas no controle manual e fornecer maior organização e eficiência operacional. Além disso, a ferramenta possibilita melhor acompanhamento administrativo, permitindo análise de desempenho e melhoria contínua dos serviços prestados.
 
 ## Estrutura do Projeto
-Nesta etapa, o projeto contempla apenas a modelagem inicial do banco de dados, com:
+Nesta etapa, o projeto contempla a modelagem do banco de dados, com:
 
-- Definição das principais tabelas
-- Estabelecimento dos relacionamentos entre entidades
-- Sem aprofundamento em regras de negócio ou funcionalidades do sistema
+        1. Visão Geral — propósito do sistema e fluxo principal
+        2. Entidades — tabela com as 9 entidades, finalidade e atributos
+        3. Relacionamentos — tabela com cardinalidades e descrições
+        4. Regras de Negócio — as 6 regras implementadas no modelo
+        5. Fluxo Operacional — passo a passo do uso do sistema
+        6. Observações Técnicas — detalhes de implementação do banco
 
 ## Modelo de Dados
 O modelo de dados foi desenvolvido utilizando diagrama ER em formato MERMAID, representando:
 
-- Entidades principais do sistema: PESSOA, SEXO, CLIENTE, SENHA, ATENDENTE, FILA, PRIORIDADE e ATENDIMENTO
+- Entidades principais do sistema: PESSOA, SEXO, CLIENTE, ATENDENTE, ATENDENTE FILA, FILA, PRIORIDADE, SENHA/FICHA e ATENDIMENTO
 - Relacionamentos entre as entidades
-- Estrutura inicial pronta para expansão futura
+
+## Regra de Negócio
+        1. Pessoa universal — Clientes e atendentes são cadastrados primeiro como PESSOA, evitando duplicidade de dados pessoais.
+        2. Duplo papel — Uma mesma pessoa pode ser simultaneamente cliente e atendente, com registros independentes em cada tabela especializada.
+        3. Gestão de filas — Cada fila pode ter múltiplos atendentes associados via FILA_ATENDENTE, permitindo escalabilidade e cobertura.
+        4. Rastreabilidade — O ATENDIMENTO referencia a SENHA_FICHA de origem, criando trilha completa: cliente → fila → ficha → atendimento.
+        5. Prioridade na ficha — A prioridade é definida no momento da emissão da senha, não no atendimento, refletindo corretamente o fluxo real.
+        6. Controle de status — Tanto FILA quanto SENHA_FICHA possuem campo status, permitindo controle de estados (aberta/fechada/aguardando/atendida).
 
 ## Fluxograma do Sistema
 ```
@@ -41,6 +51,11 @@ Atendimento é encerrado
 
 ```mermaid
 erDiagram
+    SEXO {
+        serial sexo_id PK
+        varchar descricao
+    }
+
     PESSOA {
         int id_pessoa PK
         int sexo_id FK
@@ -51,10 +66,6 @@ erDiagram
         date data_nascimento
     }
 
-    SEXO{
-        in sexo_id PK    
-    }
-
     CLIENTE {
         int id_cliente PK
         int pessoa_id FK
@@ -63,54 +74,64 @@ erDiagram
     ATENDENTE {
         int id_atendente PK
         int pessoa_id FK
-        int cargo
-        
-    }
-
-    SENHA_FICHA{
-        numeric senha_id PK
-        int id_pessoa FK
-
-    }
-
-    FILA {
-        int id PK
-        string nome
-        string status
-        date data
-        int prioridade_id FK
+        varchar cargo
     }
 
     PRIORIDADE {
+        int id_prioridade PK
+        varchar descricao
+        int nivel
+    }
+
+    FILA {
+        int id_fila PK
+        varchar nome
+        varchar status
+        date data_criacao
+    }
+
+    FILA_ATENDENTE {
         int id PK
-        string descricao
+        int fila_id FK
+        int atendente_id FK
+    }
+
+    SENHA_FICHA {
+        int senha_id PK
+        int cliente_id FK
+        int fila_id FK
+        int prioridade_id FK
+        timestamp created_at
+        varchar status
     }
 
     ATENDIMENTO {
-        int id PK
-        datetime inicio
-        datetime fim
-        string status
-        string observacoes
+        int id_atendimento PK
+        timestamp inicio
+        timestamp fim
+        varchar status
+        text observacoes
         int atendente_id FK
         int cliente_id FK
         int fila_id FK
+        int senha_id FK
     }
 
-    PESSOA ||--|| CLIENTE : "pode ser"
-    PESSOA ||--|| ATENDENTE : "pode ser"
-    
-    PESSOA ||--o{ SEXO : "define"
+    SEXO ||--o{ PESSOA : "classifica"
+    PESSOA ||--o| CLIENTE : "pode ser"
+    PESSOA ||--o| ATENDENTE : "pode ser"
 
     CLIENTE ||--o{ SENHA_FICHA : "recebe"
-    ATENDENTE ||--o{ SENHA_FICHA : "retira"
-    ATENDENTE ||--o{ ATENDIMENTO : "realiza"
-    
-    SENHA_FICHA ||--o{ FILA : "direciona"
-    SENHA_FICHA ||--o{ PRIORIDADE : "define"
+    FILA ||--o{ SENHA_FICHA : "organiza"
+    PRIORIDADE ||--o{ SENHA_FICHA : "define"
 
-    FILA ||--o{ ATENDIMENTO : "organiza"
-    PRIORIDADE ||--o{ ATENDIMENTO : "define"
+    FILA ||--o{ FILA_ATENDENTE : "possui"
+    ATENDENTE ||--o{ FILA_ATENDENTE : "atende em"
+
+    SENHA_FICHA ||--o| ATENDIMENTO : "gera"
+    ATENDENTE ||--o{ ATENDIMENTO : "realiza"
+    CLIENTE ||--o{ ATENDIMENTO : "participa"
+    FILA ||--o{ ATENDIMENTO : "contém"
 ```
 
 ## Versão
@@ -120,3 +141,4 @@ erDiagram
 | 1.2| Adição do fluxograma exemplificando como irá funcionar o sistema |
 | 1.3| Adição de esquema de versionamento do projeto|
 | 1.4| Alteração do diagrama MERMAID com alguns incrementos|
+| 1.5| Adição de novas tabelas e comportamentos entre elas, prioridade definida dentro de senha|
