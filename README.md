@@ -75,6 +75,7 @@ erDiagram
         int id_atendente PK
         int pessoa_id FK
         varchar cargo
+        int matricula
     }
 
     PRIORIDADE {
